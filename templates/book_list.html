@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Список книг</title>
+    <title>Книги</title>
 </head>
 <body>
     <h1>Список книг</h1>
-    <ul>
-        {% for book in books %}
-            <li>
-                <a href="{% url 'book_detail' book.pk %}">
-                    {{ book.title }} — {{ book.author }}
-                </a>
-            </li>
-        {% empty %}
-            <li>Книг пока нет.</li>
-        {% endfor %}
-    </ul>
+    {% for book in books %}
+        <div>
+            <h2><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></h2>
+            <p>Автор: {{ book.author }}</p>
+            <img src="{{ book.image.url }}" width="200">
+        </div>
+    {% endfor %}
 </body>
 </html>

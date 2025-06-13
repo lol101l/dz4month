@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>{{ book.title }}</title>
 </head>
 <body>
     <h1>{{ book.title }}</h1>
-    <p><strong>Автор:</strong> {{ book.author }}</p>
-    <p><strong>Описание:</strong> {{ book.description }}</p>
-    <p><strong>Дата публикации:</strong> {{ book.published_date }}</p>
+    <p>Автор: {{ book.author }}</p>
+    <p>Описание: {{ book.description }}</p>
+    <p>Цена: {{ book.price }} сом</p>
+    <img src="{{ book.image.url }}" width="300">
 
-    {% if book.cover %}
-        <img src="{{ book.cover.url }}" alt="{{ book.title }}" width="200">
-    {% endif %}
+    <h3>Аудиокнига</h3>
+    <iframe width="560" height="315" src="{{ book.video }}" frameborder="0" allowfullscreen></iframe>
 
-    {% if book.youtube_link %}
-        <h2>Аудиокнига:</h2>
-        <iframe width="560" height="315"
-                src="{{ book.youtube_link }}"
-                frameborder="0"
-                allowfullscreen>
-        </iframe>
-    {% endif %}
+    <h3>Отзывы</h3>
+    {% for review in reviews %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+            <p><strong>{{ review.author }}</strong>: {{ review.text }}</p>
+            <p>Оценка: {{ review.mark }}</p>
+        </div>
+    {% endfor %}
 
-    <br><a href="{% url 'book_list' %}">← Назад к списку</a>
+    <p><strong>Средний рейтинг: {{ average_rating|default:"Нет оценок" }}</strong></p>
+
+    <h3>Оставить отзыв</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
 </body>
 </html>
