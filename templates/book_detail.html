@@ -5,29 +5,25 @@
 </head>
 <body>
     <h1>{{ book.title }}</h1>
-    <p>Автор: {{ book.author }}</p>
-    <p>Описание: {{ book.description }}</p>
-    <p>Цена: {{ book.price }} сом</p>
-    <img src="{{ book.image.url }}" width="300">
+    <img src="{{ book.image.url }}" alt="{{ book.title }}" style="max-width: 300px;">
+    <p>{{ book.description }}</p>
+    <iframe width="560" height="315" src="{{ book.youtube_link }}" frameborder="0" allowfullscreen></iframe>
 
-    <h3>Аудиокнига</h3>
-    <iframe width="560" height="315" src="{{ book.video }}" frameborder="0" allowfullscreen></iframe>
-
-    <h3>Отзывы</h3>
+    <h2>Отзывы</h2>
     {% for review in reviews %}
-        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-            <p><strong>{{ review.author }}</strong>: {{ review.text }}</p>
-            <p>Оценка: {{ review.mark }}</p>
-        </div>
+        <p><strong>{{ review.author }}</strong>: {{ review.text }} (оценка: {{ review.mark }})</p>
     {% endfor %}
 
-    <p><strong>Средний рейтинг: {{ average_rating|default:"Нет оценок" }}</strong></p>
+    <h3>Средняя оценка: {{ average_rating|default:"Нет оценок" }}</h3>
 
-    <h3>Оставить отзыв</h3>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Отправить</button>
-    </form>
+    {% if user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Оставить отзыв</button>
+        </form>
+    {% else %}
+        <p>Войдите, чтобы оставить отзыв.</p>
+    {% endif %}
 </body>
 </html>

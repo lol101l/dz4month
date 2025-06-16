@@ -5,12 +5,12 @@
 </head>
 <body>
     <h1>Список книг</h1>
-    {% for book in books %}
-        <div>
-            <h2><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></h2>
-            <p>Автор: {{ book.author }}</p>
-            <img src="{{ book.image.url }}" width="200">
-        </div>
-    {% endfor %}
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
