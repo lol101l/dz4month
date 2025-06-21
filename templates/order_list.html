@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список заказов</title>
+</head>
+<body>
+    <h1>Все заказы</h1>
+    <a href="{% url 'order_create' %}">Создать новый заказ</a>
+    <ul>
+        {% for order in orders %}
+            <li>
+                {{ order.full_name }} — {{ order.phone_number }} —
+                {% if order.status %}Подтвержден{% else %}Не подтвержден{% endif %}
+                |
+                <a href="{% url 'order_update' order.pk %}">Изменить</a> |
+                <a href="{% url 'order_delete' order.pk %}">Удалить</a>
+            </li>
+        {% empty %}
+            <li>Нет заказов</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

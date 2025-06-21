@@ -1,17 +1,13 @@
 from pathlib import Path
 
-# Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Безопасный ключ
-SECRET_KEY = 'django-insecure-замени-на-свой-ключ'
+SECRET_KEY = 'django-insecure-ваш-секретный-ключ'
 
-# Включён режим отладки
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Приложения проекта
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -19,7 +15,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'book',  # ваше приложение
+    'book',
+    'basket',
 ]
 
 MIDDLEWARE = [
@@ -37,7 +34,7 @@ ROOT_URLCONF = 'main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # директория для шаблонов
+        'DIRS': [BASE_DIR / 'templates'],  # Шаблоны берутся из папки templates/
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,7 +49,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-# Подключение к базе данных SQLite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -60,35 +56,20 @@ DATABASES = {
     }
 }
 
-# Настройки паролей
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Язык и часовой пояс
-LANGUAGE_CODE = 'ru-ru'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'ru-RU'
+
+TIME_ZONE = 'Asia/Bishkek'
+
 USE_I18N = True
 USE_TZ = True
 
-# Статические файлы
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_URL = 'static/'
 
-# Медиа-файлы
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-# Идентификатор основной модели пользователя
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
