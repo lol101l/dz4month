@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
+    <meta charset="UTF-8">
     <title>{{ book.title }}</title>
 </head>
 <body>
     <h1>{{ book.title }}</h1>
-    <img src="{{ book.image.url }}" alt="{{ book.title }}" style="max-width: 300px;">
-    <p>{{ book.description }}</p>
-    <iframe width="560" height="315" src="{{ book.youtube_link }}" frameborder="0" allowfullscreen></iframe>
+    <img src="{{ book.image.url }}" alt="{{ book.title }}" width="300">
+    <p><strong>Автор:</strong> {{ book.author }}</p>
+    <p><strong>Описание:</strong> {{ book.description }}</p>
+    <p><strong>Год издания:</strong> {{ book.year }}</p>
+    <p><strong>Цена:</strong> {{ book.price }} сом</p>
+    
+    <p><strong>Смотреть/слушать:</strong></p>
+    <iframe width="560" height="315" src="{{ book.youtube }}" frameborder="0" allowfullscreen></iframe>
 
-    <h2>Отзывы</h2>
-    {% for review in reviews %}
-        <p><strong>{{ review.author }}</strong>: {{ review.text }} (оценка: {{ review.mark }})</p>
-    {% endfor %}
+    <hr>
 
-    <h3>Средняя оценка: {{ average_rating|default:"Нет оценок" }}</h3>
-
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Оставить отзыв</button>
-        </form>
+    <h2>Отзывы:</h2>
+    {% if average_mark %}
+        <p><strong>Средняя оценка:</strong> {{ average_mark }} / 5</p>
     {% else %}
-        <p>Войдите, чтобы оставить отзыв.</p>
+        <p>Оценок пока нет.</p>
     {% endif %}
+
+    {% for comment in comments %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+            <p><strong>{{ comment.author.username }}</strong> поставил оценку {{ comment.mark }}/5</p>
+            <p>{{ comment.text }}</p>
+        </div>
+    {% empty %}
+        <p>Отзывов пока нет.</p>
+    {% endfor %}
 </body>
 </html>

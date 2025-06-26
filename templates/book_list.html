@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Книги</title>
-</head>
-<body>
-    <h1>Список книг</h1>
-    <ul>
-        {% for book in books %}
-            <li>
-                <a href="{% url 'book_detail' book.pk %}">{{ book.title }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+<h1>Список книг</h1>
+
+{% for book in page_obj %}
+    <div>
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description }}</p>
+        <a href="{% url 'book_detail' book.pk %}">Подробнее</a>
+    </div>
+{% endfor %}
+
+<div>
+    {% if page_obj.has_previous %}
+        <a href="?page=1">Первая</a>
+        <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+    {% endif %}
+
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+    {% endif %}
+</div>
