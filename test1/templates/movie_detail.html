@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ movie.title }}</h2>
+<p>{{ movie.description }}</p>
+{% if movie.poster %}
+    <img src="{{ movie.poster.url }}" alt="Poster" width="200">
+{% endif %}
+<p>Средняя оценка: {{ average|default:"нет оценок" }}</p>
+<iframe width="560" height="315" src="{{ movie.youtube_trailer }}" frameborder="0" allowfullscreen></iframe>
+
+{% if user.is_authenticated %}
+    <h3>Добавить комментарий</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+{% endif %}
+
+<h3>Комментарии</h3>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.author.username }}: {{ comment.text }} — {{ comment.mark }}/5</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'movie_edit' movie.pk %}">Редактировать</a> |
+<a href="{% url 'movie_delete' movie.pk %}">Удалить</a>
+{% endblock %}

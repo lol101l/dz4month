@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Список фильмов</h2>
+<a href="{% url 'movie_create' %}">Добавить фильм</a>
+<ul>
+    {% for movie in movies %}
+        <li>
+            <a href="{% url 'movie_detail' movie.pk %}">{{ movie.title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
